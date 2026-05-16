@@ -10,7 +10,7 @@ from prism import export_prism_project
 load_dotenv()
 
 DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
-MAX_BACKUPS = os.getenv("MAX_BACKUPS", "5")
+MAX_BACKUPS = int(os.getenv("MAX_BACKUPS", "5"))
 _channel_id = os.getenv("CHANNEL_ID")
 _user_id = os.getenv("USER_ID")
 
