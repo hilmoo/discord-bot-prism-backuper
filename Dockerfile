@@ -1,4 +1,4 @@
-FROM ghcr.io/astral-sh/uv:python3.12-bookworm-slim AS base
+FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim AS base
 ENV UV_COMPILE_BYTECODE=1 UV_LINK_MODE=copy
 WORKDIR /app
 
@@ -7,12 +7,10 @@ COPY . .
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --frozen --no-dev
 
-FROM python:3.12-slim-bookworm
+FROM ghcr.io/astral-sh/uv:python3.13-bookworm-slim
 WORKDIR /app
 
 COPY --from=builder /app /app
 COPY --from=builder /app/.venv /app/.venv
 
-ENV PATH="/app/.venv/bin:$PATH"
-
-CMD ["python", "main.py"]
+CMD ["uv", "run", "python", "main.py"]
